@@ -77,7 +77,12 @@ WSGI_APPLICATION = 'procesosagilesespecies2.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'especies',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
