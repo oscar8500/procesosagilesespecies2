@@ -6,8 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.core import serializers
 
-
 # Create your views here.
+from especies.models import UserProfile
+
 
 @csrf_exempt
 def adicionar_usuario(request):
@@ -23,6 +24,8 @@ def adicionar_usuario(request):
         user_model.first_name = first_name
         user_model.last_name = last_name
         user_model.email = email
+        user_model.profile.imageFile = json_user['image_file']
+
         user_model.save()
 
     return HttpResponse(serializers.serialize("json", [user_model]))

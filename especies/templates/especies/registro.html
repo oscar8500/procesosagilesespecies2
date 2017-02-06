@@ -23,6 +23,7 @@
                     first_name: $('#first_name').val(),
                     last_name: $('#last_name').val(),
                     email: $('#email').val(),
+                    image_file: 'images/' + $('#imageFile').val().substring($('#imageFile').val().lastIndexOf("\\") + 1, $('#imageFile').val().length),
                     password: $('#password').val(),
                     password2: $('#password2').val()
                 }),
@@ -58,6 +59,7 @@
             <input id="email" name="email" type="text" placeholder="Correo electrónico(nombre de usuario)"
                    class="form-control input-md"
                    required><br>
+            <input id="imageFile" name="imageFile" type="file"><br>
             <input id="password" name="password" type="password" placeholder="Contraseña" class="form-control input-md"
                    required><br>
             <input id="password2" name="password2" type="password" placeholder="Verificar contraseña"

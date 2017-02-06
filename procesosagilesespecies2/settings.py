@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'procesosagilesespecies2.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'especies',
         'USER': 'postgres',
         'PASSWORD': '123456',
@@ -119,8 +119,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+AUTH_PROFILE_MODULE = 'especies.UserProfile'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/images/'
+STATIC_ROOT = '/staticfiles/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'images')
+]
