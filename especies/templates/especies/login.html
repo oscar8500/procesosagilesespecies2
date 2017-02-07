@@ -8,6 +8,9 @@
           crossorigin="anonymous"/>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $('#mensaje_danger').hide();
+        });
 
         function enviarForm() {
             $.ajax({
@@ -23,6 +26,7 @@
                         window.location = "../listar";
                     } else {
                         $('#mensaje').text(data.mensaje);
+                        $('#mensaje_danger').show();
                     }
 
                 },
@@ -43,7 +47,7 @@
             <h2>Iniciar sesión</h2>
         </div>
 
-        <div class="alert alert-danger">
+        <div id="mensaje_danger" class="alert alert-danger">
             <label id="mensaje"></label>
         </div>
 
@@ -62,7 +66,7 @@
                 <input type="password" id="password" name="password" class="form-control">
             </div>
 
-            <button class="btn btn-primary">Login</button>
+            <button class="btn btn-primary">Iniciar sesión</button>
             <a href="../listar" class="btn btn-primary">Cancelar</a>
 
         </form>
