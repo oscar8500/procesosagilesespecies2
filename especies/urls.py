@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^logout/$', views.logout_request, name='logout'),
     url(r'^isLogged/$', views.islogged, name='isLogged'),
     url(r'^login/$', views.login_request, name='login'),
+    url(r'^fillCities/$', views.fillCities, name='fillCities'),
 
     url(r'^listar/$', views.index_especies, name='listar'),
     url(r'^agregarUsuario/$', views.index_usuario, name='agregarUsuario'),
