@@ -7,27 +7,25 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
-from .models import Specie
 
 # Create your views here.
-
+from especies.models import UserProfile, Country, City
 
 
 @csrf_exempt
 def adicionar_usuario(request):
     if request.method == 'POST':
-        json_user = json.loads(request.body)
-        first_name = json_user['first_name']
-        last_name = json_user['last_name']
-        password = json_user['password']
-        email = json_user['email']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        password = request.POST['password']
+        email = request.POST['email']
         user_name = email
 
         user_model = User.objects.create_user(username=user_name, password=password)
         user_model.first_name = first_name
         user_model.last_name = last_name
         user_model.email = email
-        user_model.profile.imageFile = json_user['image_file']
+        user_model.profile.imageFile = request.FILES['imageFile']
 
         user_model.save()
 
@@ -66,14 +64,25 @@ def islogged(request):
     return JsonResponse({"mensaje": mensaje})
 
 
+@csrf_exempt
+def fillCities(request):
+    if request.method == 'POST':
+        jsonUser = json.loads(request.body)
+        id_country = jsonUser['id_country']
+        cities = City.objects.filter(country_id=id_country)
+        citiesDict = dict([(c.id, c.name) for c in cities])
+
+    return HttpResponse(json.dumps(citiesDict))
+
+
 def index_especies(request):
-    lista_especies= Specie.objects.all()
-    contexto= {'lista_especies':lista_especies}
-    return render(request, 'especies/index.html',contexto)
+    return render(request, 'especies/index.html')
 
 
 def index_usuario(request):
-    return render(request, 'especies/registro.html')
+    lista_paises = Country.objects.all()
+    context = {'lista_paises': lista_paises}
+    return render(request, 'especies/registro.html', context)
 
 
 def ingresar(request):

@@ -7,39 +7,7 @@
           integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
           crossorigin="anonymous"/>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script>
 
-        function enviarForm() {
-
-            if ($('#password').val() != $('#password2').val()) {
-                alert('Las contraseñas no coinciden')
-                return false;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "../addUser/",
-                data: JSON.stringify({
-                    first_name: $('#first_name').val(),
-                    last_name: $('#last_name').val(),
-                    email: $('#email').val(),
-                    image_file: 'images/' + $('#imageFile').val().substring($('#imageFile').val().lastIndexOf("\\") + 1, $('#imageFile').val().length),
-                    password: $('#password').val(),
-                    password2: $('#password2').val()
-                }),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (data) {
-                    window.location = "../listar";
-                },
-                failure: function (errMsg) {
-                    alert('Hubo un error');
-                }
-            });
-
-            return false;
-        }
-    </script>
 </head>
 <body>
 {% comment %}
@@ -51,7 +19,7 @@
             <h2>Registrar usuario</h2>
         </div>
 
-        <form method="post" action="" onsubmit="return enviarForm();">
+        <form id="formImagen" action="../addUser/" enctype="multipart/form-data" method="post">
             <input id="first_name" name="first_name" type="text" placeholder="Nombres" class="form-control input-md"
                    required><br>
             <input id="last_name" name="last_name" type="text" placeholder="Apellidos" class="form-control input-md"
@@ -60,6 +28,15 @@
                    class="form-control input-md"
                    required><br>
             <input id="imageFile" name="imageFile" type="file"><br>
+            <select id="id_country">
+                <option value="-1">--Seleccione--</option>
+                {% for pais in lista_paises %}
+                    <option value="{{ pais.id }}">{{ pais.name }}</option>
+                {% endfor %}
+            </select><br><br>
+            <select id="id_city">
+                <option value="-1">--Seleccione--</option>
+            </select><br><br>
             <input id="password" name="password" type="password" placeholder="Contraseña" class="form-control input-md"
                    required><br>
             <input id="password2" name="password2" type="password" placeholder="Verificar contraseña"
@@ -71,6 +48,67 @@
         </form>
     </div>
 </div>
+<script>
+    $('form').submit(function (e) {
 
+        if ($('#password').val() != $('#password2').val()) {
+            alert('Las contraseñas no coinciden')
+            return false;
+        }
+
+        var formData = new FormData($('#formImagen')[0]);
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data)
+                window.location = "../listar/";
+            },
+            failure: function (errMsg) {
+                alert('Hubo un error');
+            }
+        });
+        e.preventDefault();
+    });
+    $('#id_country').on('change', function () {
+        $('#id_city')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="-1">--Seleccione--</option>')
+            .val('-1');
+
+        if (this.value == -1) {
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "../fillCities/",
+            data: JSON.stringify({
+                id_country: this.value
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    $.each(data, function (key, value) {
+                        $('#id_city').append($("<option/>").val(key).text(value));
+                    });
+                } else {
+                    console.log('error')
+                }
+
+            },
+            failure: function (errMsg) {
+                alert('Hubo un error');
+            }
+        });
+    })
+
+</script>
 </body>
 </html>
