@@ -9,7 +9,7 @@ from django.core import serializers
 from django.http import JsonResponse
 
 # Create your views here.
-from especies.models import UserProfile, Country, City
+from .models import UserProfile, Country, City, Specie
 
 
 @csrf_exempt
@@ -76,7 +76,9 @@ def fillCities(request):
 
 
 def index_especies(request):
-    return render(request, 'especies/index.html')
+    lista_especies = Specie.objects.all()
+    context = {'lista_expecies': lista_especies}
+    return render(request, 'especies/index.html',context)
 
 
 def index_usuario(request):
