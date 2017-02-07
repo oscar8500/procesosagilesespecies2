@@ -11,9 +11,26 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
-    imageFile = models.ImageField(upload_to='images', null=True)
+    #imageFile = models.ImageField(upload_to='images', null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    description = models.TextField(max_length=1000,default='Algo')
+    city = models.CharField(max_length=100,default='Bogota')
+    country= models.CharField(max_length=100,default='Colombia')
 
+class Specie(models.Model):
+    name= models.CharField(max_length=100)
+    category= models.CharField(max_length=100)
+
+class Comment(models.Model):
+    content= models.TextField(max_length=1000)
+    email= models.EmailField(max_length=50)
+    user= models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comments')
+    specie= models.ForeignKey(Specie, on_delete=models.CASCADE, related_name='comments')
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
