@@ -77,7 +77,7 @@ def fillCities(request):
 
 def index_especies(request):
     lista_especies = Specie.objects.all()
-    context = {'lista_expecies': lista_especies}
+    context = {'lista_especies': lista_especies}
     return render(request, 'especies/index.html',context)
 
 
