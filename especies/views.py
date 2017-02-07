@@ -7,9 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
+from .models import Specie
 
 # Create your views here.
-from especies.models import UserProfile
+
 
 
 @csrf_exempt
@@ -66,7 +67,9 @@ def islogged(request):
 
 
 def index_especies(request):
-    return render(request, 'especies/index.html')
+    lista_especies= Specie.objects.all()
+    contexto= {'lista_especies':lista_especies}
+    return render(request, 'especies/index.html',contexto)
 
 
 def index_usuario(request):

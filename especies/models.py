@@ -11,15 +11,20 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
-    #imageFile = models.ImageField(upload_to='images', null=True)
+    imageFile = models.ImageField(upload_to='images', null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    description = models.TextField(max_length=1000,default='Algo')
+    description = models.TextField(max_length=1000,default='')
     city = models.CharField(max_length=100,default='Bogota')
     country= models.CharField(max_length=100,default='Colombia')
 
 class Specie(models.Model):
     name= models.CharField(max_length=100)
-    category= models.CharField(max_length=100)
+    category= models.CharField(max_length=100,default='')
+    tax_clasification= models.CharField(max_length=100,default='')
+    scientific_name= models.CharField(max_length=100,default='')
+    imageFile = models.ImageField(upload_to='images', null=True)
+    short_desc=models.CharField(max_length=200,default='')
+    large_desc= models.TextField(max_length=2000,default='')
 
 class Comment(models.Model):
     content= models.TextField(max_length=1000)
