@@ -18,33 +18,36 @@ class City(models.Model):
     name = models.CharField(max_length=200, blank=False)
     country = models.ForeignKey(Country, null=True)
 
+
 class UserProfile(models.Model):
     imageFile = models.ImageField(upload_to='images', null=True)
+    description = models.TextField(max_length=1000, default='')
+    city_name = models.CharField(max_length=100, default='Bogota')
+    country_name = models.CharField(max_length=100, default='Colombia')
     city = models.ForeignKey(City, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    description = models.TextField(max_length=1000,default='')
-    city = models.CharField(max_length=100,default='Bogota')
-    country= models.CharField(max_length=100,default='Colombia')
+
 
 class Specie(models.Model):
-    name= models.CharField(max_length=100)
-    category= models.CharField(max_length=100,default='')
-    tax_clasification= models.CharField(max_length=100,default='')
-    scientific_name= models.CharField(max_length=100,default='')
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=100, default='')
+    tax_clasification = models.CharField(max_length=100, default='')
+    scientific_name = models.CharField(max_length=100, default='')
     imageFile = models.ImageField(upload_to='images', null=True)
-    short_desc=models.CharField(max_length=200,default='')
-    large_desc= models.TextField(max_length=2000,default='')
+    short_desc = models.CharField(max_length=200, default='')
+    large_desc = models.TextField(max_length=2000, default='')
+
 
 class Comment(models.Model):
-    content= models.TextField(max_length=1000)
-    email= models.EmailField(max_length=50)
-    user= models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comments')
-    specie= models.ForeignKey(Specie, on_delete=models.CASCADE, related_name='comments')
-
+    content = models.TextField(max_length=1000)
+    email = models.EmailField(max_length=50)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comments')
+    specie = models.ForeignKey(Specie, on_delete=models.CASCADE, related_name='comments')
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -55,5 +58,3 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-

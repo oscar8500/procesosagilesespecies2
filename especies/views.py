@@ -26,6 +26,13 @@ def adicionar_usuario(request):
         user_model.last_name = last_name
         user_model.email = email
         user_model.profile.imageFile = request.FILES['imageFile']
+        id_city = request.POST['id_city']
+        user_model.profile.city_id = id_city
+        city_name = City.objects.values_list('name', flat=True).get(pk=id_city)
+        country_id = City.objects.values_list('country_id', flat=True).get(pk=id_city)
+        user_model.profile.city_name = city_name
+        country_name = Country.objects.values_list('name', flat=True).get(pk=country_id)
+        user_model.profile.country_name = country_name
 
         user_model.save()
 
@@ -78,7 +85,7 @@ def fillCities(request):
 def index_especies(request):
     lista_especies = Specie.objects.all()
     context = {'lista_especies': lista_especies}
-    return render(request, 'especies/index.html',context)
+    return render(request, 'especies/index.html', context)
 
 
 def index_usuario(request):
