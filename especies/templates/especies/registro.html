@@ -19,24 +19,30 @@
             <h2>Registrar usuario</h2>
         </div>
 
+        <div id="mensaje_danger" class="alert alert-danger">
+            <label id="mensaje"></label>
+        </div>
+
         <form id="formImagen" action="../addUser/" enctype="multipart/form-data" method="post">
             <input id="first_name" name="first_name" type="text" placeholder="Nombres" class="form-control input-md"
                    required><br>
             <input id="last_name" name="last_name" type="text" placeholder="Apellidos" class="form-control input-md"
                    required><br>
-            <input id="email" name="email" type="text" placeholder="Correo electrónico(nombre de usuario)"
-                   class="form-control input-md"
-                   required><br>
-            <input id="imageFile" name="imageFile" type="file"><br>
-            <select id="id_country" name="id_country" class="form-control">
-                <option value="-1">--Seleccione Pais--</option>
+            <input id="imageFile" name="imageFile" type="file" required><br>
+            <select id="id_country" name="id_country" class="form-control" required>
+                <option value="">--Seleccione Pais--</option>
                 {% for pais in lista_paises %}
                     <option value="{{ pais.id }}">{{ pais.name }}</option>
                 {% endfor %}
             </select><br>
-            <select id="id_city" name="id_city" class="form-control">
-                <option value="-1">--Seleccione Ciudad--</option>
+            <select id="id_city" name="id_city" class="form-control" required>
+                <option value="">--Seleccione Ciudad--</option>
             </select><br>
+            <input id="email" name="email" type="email" placeholder="Correo electrónico(nombre de usuario)"
+                   class="form-control input-md"
+                   required><br>
+            <textarea placeholder="Díganos su interes en la reserva" name="description" class="form-control span6"
+                      rows="3" id="description" required></textarea><br>
             <input id="password" name="password" type="password" placeholder="Contraseña" class="form-control input-md"
                    required><br>
             <input id="password2" name="password2" type="password" placeholder="Verificar contraseña"
@@ -49,6 +55,8 @@
     </div>
 </div>
 <script>
+    $('#mensaje_danger').hide();
+
     $('form').submit(function (e) {
 
         if ($('#password').val() != $('#password2').val()) {
@@ -64,8 +72,13 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data)
-                window.location = "../listar/";
+                if (data.mensaje == 'ok') {
+                    window.location = "../listar";
+                }
+                else {
+                    $('#mensaje').text(data.mensaje);
+                    $('#mensaje_danger').show();
+                }
             },
             failure: function (errMsg) {
                 alert('Hubo un error');
@@ -78,7 +91,7 @@
             .find('option')
             .remove()
             .end()
-            .append('<option value="-1">--Seleccione--</option>')
+            .append('<option value="">--Seleccione--</option>')
             .val('-1');
 
         if (this.value == -1) {

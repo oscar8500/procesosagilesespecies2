@@ -14,29 +14,38 @@ from .models import UserProfile, Country, City, Specie
 
 @csrf_exempt
 def adicionar_usuario(request):
+    mensaje = ''
+
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         password = request.POST['password']
         email = request.POST['email']
+        description = request.POST['description']
         user_name = email
 
-        user_model = User.objects.create_user(username=user_name, password=password)
-        user_model.first_name = first_name
-        user_model.last_name = last_name
-        user_model.email = email
-        user_model.profile.imageFile = request.FILES['imageFile']
-        id_city = request.POST['id_city']
-        user_model.profile.city_id = id_city
-        city_name = City.objects.values_list('name', flat=True).get(pk=id_city)
-        country_id = City.objects.values_list('country_id', flat=True).get(pk=id_city)
-        user_model.profile.city_name = city_name
-        country_name = Country.objects.values_list('name', flat=True).get(pk=country_id)
-        user_model.profile.country_name = country_name
+        usuarios = User.objects.filter(username=email)
+        if usuarios is not None and usuarios.count() > 0:
+            mensaje = 'El usuario ya existe en el sistema'
+        else:
+            user_model = User.objects.create_user(username=user_name, password=password)
+            user_model.first_name = first_name
+            user_model.last_name = last_name
+            user_model.email = email
+            user_model.profile.description = description
+            user_model.profile.imageFile = request.FILES['imageFile']
+            id_city = request.POST['id_city']
+            user_model.profile.city_id = id_city
+            city_name = City.objects.values_list('name', flat=True).get(pk=id_city)
+            country_id = City.objects.values_list('country_id', flat=True).get(pk=id_city)
+            user_model.profile.city_name = city_name
+            country_name = Country.objects.values_list('name', flat=True).get(pk=country_id)
+            user_model.profile.country_name = country_name
 
-        user_model.save()
+            user_model.save()
+            mensaje = 'ok'
 
-    return HttpResponse(serializers.serialize("json", [user_model]))
+    return JsonResponse({"mensaje": mensaje})
 
 
 @csrf_exempt
