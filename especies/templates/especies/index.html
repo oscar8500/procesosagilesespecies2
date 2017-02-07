@@ -8,7 +8,33 @@
           crossorigin="anonymous"/>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
+        (function () {
+            $.getJSON("../isLogged").done(function (data) {
+                if (data.mensaje == 'no') {
+                    $("#add_user").show();
+                    $("#cerrar_session").hide();
+                    $("#add_image").hide();
+                    $("#login_user").show();
+                }
+                else {
+                    $("#add_user").hide();
+                    $("#cerrar_session").show();
+                    $("#add_image").show();
+                    $("#login_user").hide();
+                }
+            });
+        })();
 
+        function logout() {
+            $.getJSON("../logout").done(function (data) {
+                if (data.mensaje == 'ok') {
+                    location.reload();
+                }
+                else {
+                    alert('Hubo un error');
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -32,8 +58,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li id="add_user"><a href="../agregarUsuario">Registro</a></li>
                 <li id="cerrar_session"><a id="click_cerrar_session" href="#" class="glyphicon glyphicon-log-out"
-                                           onclick="">Logout</a></li>
-                <li id="login_user"><a href="" class="glyphicon glyphicon-log-in">Login</a>
+                                           onclick="logout();">Logout</a></li>
+                <li id="login_user"><a href="../ingresar" class="glyphicon glyphicon-log-in">Login</a>
                 </li>
 
             </ul>
