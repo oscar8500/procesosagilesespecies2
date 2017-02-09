@@ -1,0 +1,1 @@
+web: gunicorn procesosagilesespecies2.wsgi

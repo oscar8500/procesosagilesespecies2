@@ -25,7 +25,7 @@ SECRET_KEY = 'tzg(49*yq&07f%9gl&&ap)tbl7co-db_t#!q(=#&@+7q^tq9cs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,13 +78,15 @@ WSGI_APPLICATION = 'procesosagilesespecies2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'especies',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
+        'NAME': 'tjvjuiko',
+        'USER': 'tjvjuiko',
+        'PASSWORD': '4-KtyPg4YObkgKaUWpBPotpfRpMD7atE',
+        'HOST': 'babar.elephantsql.com',
         'PORT': '5432'
     }
 }
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # Password validation
@@ -124,8 +126,12 @@ AUTH_PROFILE_MODULE = 'especies.UserProfile'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/images/'
-STATIC_ROOT = '/staticfiles/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'images')
-]
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'images'),
+)
