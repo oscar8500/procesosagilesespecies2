@@ -130,12 +130,10 @@ AUTH_PROFILE_MODULE = 'especies.UserProfile'
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-print("---- Raiz: " + PROJECT_ROOT)
-
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles/')
 STATIC_URL = '/images/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, '../especies/images'),
+    os.path.join(PROJECT_ROOT, 'images/'),
 )
