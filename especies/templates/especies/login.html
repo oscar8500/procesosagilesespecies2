@@ -23,7 +23,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.mensaje == 'ok') {
-                        window.location = "../listar";
+                        window.location = "../";
                     } else {
                         $('#mensaje').text(data.mensaje);
                         $('#mensaje_danger').show();
@@ -67,7 +67,7 @@
             </div>
 
             <button class="btn btn-primary">Iniciar sesión</button>
-            <a href="../listar" class="btn btn-primary">Cancelar</a>
+            <a href="../" class="btn btn-primary">Cancelar</a>
 
         </form>
     </div>

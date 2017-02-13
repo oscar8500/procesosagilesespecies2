@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-offset-3">
         <div class="page-header">
-            <h2>Registrar usuario</h2>
+            <h2>Registro visitante</h2>
         </div>
 
         <div id="mensaje_danger" class="alert alert-danger">
@@ -49,7 +49,7 @@
                    class="form-control input-md" required><br>
 
             <input type="submit" value="Registrar" class="btn btn-primary">
-            <a href="../listar" class="btn btn-primary">Cancelar</a>
+            <a href="../" class="btn btn-primary">Cancelar</a>
 
         </form>
     </div>
@@ -73,7 +73,7 @@
             processData: false,
             success: function (data) {
                 if (data.mensaje == 'ok') {
-                    window.location = "../listar";
+                    window.location = "../";
                 }
                 else {
                     $('#mensaje').text(data.mensaje);
