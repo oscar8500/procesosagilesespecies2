@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'especies',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -131,8 +131,13 @@ AUTH_PROFILE_MODULE = 'especies.UserProfile'
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles/')
-STATIC_URL = '/static/'
 
+
+STATIC_URL = '/images/'
+STATIC_ROOT='staticfiles'
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'images'),
+]
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'static/'),
