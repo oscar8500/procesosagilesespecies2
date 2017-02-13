@@ -9,7 +9,7 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
         (function () {
-            $.getJSON("../isLogged").done(function (data) {
+            $.getJSON("isLogged").done(function (data) {
                 if (data.mensaje == 'no') {
                     $("#add_user").show();
                     $("#cerrar_session").hide();
@@ -26,7 +26,7 @@
         })();
 
         function logout() {
-            $.getJSON("../logout").done(function (data) {
+            $.getJSON("logout").done(function (data) {
                 if (data.mensaje == 'ok') {
                     location.reload();
                 }
@@ -56,10 +56,10 @@
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li id="add_user"><a href="../agregarUsuario">Registro</a></li>
+                <li id="add_user"><a href="agregarUsuario">Registro</a></li>
                 <li id="cerrar_session"><a id="click_cerrar_session" href="#" class="glyphicon glyphicon-log-out"
                                            onclick="logout();">Logout</a></li>
-                <li id="login_user"><a href="../ingresar" class="glyphicon glyphicon-log-in"> Iniciar-sesión</a>
+                <li id="login_user"><a href="ingresar" class="glyphicon glyphicon-log-in"> Iniciar-sesión</a>
                 </li>
 
             </ul>
