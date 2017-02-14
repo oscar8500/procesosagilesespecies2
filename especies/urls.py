@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^$', views.index_especies, name=''),
     url(r'^agregarUsuario/$', views.index_usuario, name='agregarUsuario'),
     url(r'^ingresar/$', views.ingresar, name='ingresar'),
+    url(r'^detalle/([0-9])/$', views.detalleEspecie, name='detalle'),
 ]

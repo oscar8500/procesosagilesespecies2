@@ -6,6 +6,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
+
+
 # Create your models here.
 
 
@@ -29,13 +32,21 @@ class UserProfile(models.Model):
 
 
 class Specie(models.Model):
+
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=100, default='')
-    tax_clasification = models.CharField(max_length=100, default='')
     scientific_name = models.CharField(max_length=100, default='')
     imageFile = models.ImageField(upload_to='images', null=True)
     short_desc = models.CharField(max_length=200, default='')
     large_desc = models.TextField(max_length=2000, default='')
+    kingdom=models.CharField(max_length=100, default='')
+    phylum=models.CharField(max_length=100, default='')
+    classEspecie = models.CharField(max_length=100, default='')
+    order = models.CharField(max_length=100, default='')
+    family = models.CharField(max_length=100, default='')
+    genus = models.CharField(max_length=100, default='')
+    species=models.CharField(max_length=100, default='')
+
 
 
 class Comment(models.Model):
@@ -49,6 +60,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
 
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -58,3 +70,5 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
