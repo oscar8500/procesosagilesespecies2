@@ -102,13 +102,16 @@ def index_usuario(request):
     context = {'lista_paises': lista_paises}
     return render(request, 'especies/registro.html', context)
 
+
 def details_specie(request):
     json
+
 
 def ingresar(request):
     return render(request, 'especies/login.html')
 
-def detalleEspecie(request,id):
-    especie=Specie.objects.get(id=id)
+
+def detalleEspecie(request, id):
+    especie = Specie.objects.get(id=id)
     context = {'especie': especie}
-    return render(request, 'especies/detailspecie.html',context)
+    return render(request, 'especies/detailspecie.html', context)

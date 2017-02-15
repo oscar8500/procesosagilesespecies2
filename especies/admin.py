@@ -4,7 +4,6 @@ from .models import Specie
 from .models import UserProfile
 from .models import Category, City, Country
 
-
 # Register your models here.
 admin.site.register(Comment)
 admin.site.register(Specie)

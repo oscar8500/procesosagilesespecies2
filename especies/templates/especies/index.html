@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Especies</title>
+    <title>Especies</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
           crossorigin="anonymous"/>
@@ -12,33 +11,33 @@
 </head>
 <body>
 
- <div id="nav-placeholder">  </div>
+<div id="nav-placeholder"></div>
 
 <script>
-$.get("/images/html/navbar.html", function(data){
-    $("#nav-placeholder").replaceWith(data);
-});
+    $.get("/images/html/navbar.html", function (data) {
+        $("#nav-placeholder").replaceWith(data);
+    });
 </script>
 
- <link rel="stylesheet" href="/images/css/format.css">
+<link rel="stylesheet" href="/images/css/format.css">
 
- <h1  >Especies</h1>
+<h1>Especies</h1>
 <div>
     {% for especie in lista_especies %}
 
-    <div class="especie">
-        <a href="detalle/{{especie.id}}">
-         <h3>{{especie.name}}</h3>
+        <div class="especie">
+            <a href="detalle/{{ especie.id }}">
+                <h3>{{ especie.name }}</h3>
             </a>
-        <a href="/{{especie.imageFile}}" target="_blank">
-            <img src="/{{especie.imageFile}}" >
+            <a href="/{{ especie.imageFile }}" target="_blank">
+                <img src="/{{ especie.imageFile }}">
             </a>
 
 
-        <h3> <b>Estado:</b>{{especie.category}}</h3>
-        <h4> <b>Descripción:</b>{{especie.short_desc}}</h4>
+            <h3><b>Estado:</b>{{ especie.category }}</h3>
+            <h4><b>Descripción:</b>{{ especie.short_desc }}</h4>
 
-    </div>
+        </div>
 
 
     {% endfor %}
