@@ -21,61 +21,63 @@
 </script>
 
 <link rel="stylesheet" href="/images/css/format.css">
-<div c>
-    <a href="/{{ especie.imageFile }}" target="_blank">
-        <img src="/{{ especie.imageFile }}">
-    </a>
-</div>
+
 
 
 <div>
     <table>
         <tr>
-            <td>Nombre:</td>
-            <td>{{ especie.name }}</td>
+            <td>
+                <a href="/{{ especie.imageFile }}" target="_blank">
+                    <img src="/{{ especie.imageFile }}">
+                </a>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Nombre:</td>
+                        <td>{{ especie.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Reino:</td>
+                        <td>{{ especie.kingdom }}</td>
+                    </tr>
+                    <tr>
+                        <td>Filo:</td>
+                        <td>{{ especie.phylum }}</td>
+                    </tr>
+                    <tr>
+                        <td>Clase:</td>
+                        <td>{{ especie.classEspecie }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ordem:</td>
+                        <td>{{ especie.order }}</td>
+                    </tr>
+                    <tr>
+                        <td>Família:</td>
+                        <td>{{ especie.family }}</td>
+                    </tr>
+                    <tr>
+                        <td>Genero:</td>
+                        <td>{{ especie.genus }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre Cientifico:</td>
+                        <td>{{ especie.species }}</td>
+                    </tr>
+                    <tr>
+                        <td>Categoria:</td>
+                        <td>{{ especie.category.nomCorto }}</td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
-            <td>Nombre cientifico:</td>
-            <td>{{ especie.scientific_name }}</td>
-        </tr>
-        <tr>
-            <td>Descripción:</td>
+            <td></td>
             <td>{{ especie.large_desc }}</td>
         </tr>
-        <tr>
-            <td>Reino:</td>
-            <td>{{ especie.kingdom }}</td>
-        </tr>
-        <tr>
-            <td>Filo:</td>
-            <td>{{ especie.phylum }}</td>
-        </tr>
-        <tr>
-            <td>Clase:</td>
-            <td>{{ especie.classEspecie }}</td>
-        </tr>
-        <tr>
-            <td>Ordem:</td>
-            <td>{{ especie.order }}</td>
-        </tr>
-        <tr>
-            <td>Família:</td>
-            <td>{{ especie.family }}</td>
-        </tr>
-        <tr>
-            <td>Genero:</td>
-            <td>{{ especie.genus }}</td>
-        </tr>
-        <tr>
-            <td>Espécie:</td>
-            <td>{{ especie.species }}</td>
-        </tr>
-
-
     </table>
-
 </div>
-
-
 </body>
 </html>

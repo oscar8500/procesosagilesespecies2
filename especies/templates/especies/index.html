@@ -26,15 +26,15 @@
     {% for especie in lista_especies %}
 
         <div class="especie">
-            <a href="detalle/{{ especie.id }}">
-                <h3>{{ especie.name }}</h3>
-            </a>
+
+            <h3>{{ especie.category }}</h3>
             <a href="/{{ especie.imageFile }}" target="_blank">
                 <img src="/{{ especie.imageFile }}">
             </a>
 
-
-            <h3><b>Estado:</b>{{ especie.category }}</h3>
+            <a href="detalle/{{ especie.id }}">
+                <h3><b>Nombre:</b>{{ especie.name }}</h3>
+            </a>
             <h4><b>Descripción:</b>{{ especie.short_desc }}</h4>
 
         </div>

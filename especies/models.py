@@ -54,28 +54,28 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
     def __unicode__(self):
        return 'Categoria: ' + self.name
+    def nomCorto(self):
+        return self.name
 
 
 class Specie(models.Model):
     class Meta:
-        verbose_name = 'Especimen'
-        verbose_name_plural = 'Especimenes'
-    name = models.CharField(max_length=100,verbose_name="Nombre")
+        verbose_name = 'Especie'
+        verbose_name_plural = 'Especies'
+    name = models.CharField(max_length=100,verbose_name="Nombre Comun")
     category = models.ForeignKey(Category,blank=False,null=True,on_delete=models.CASCADE,verbose_name="Categoria")
-    scientific_name = models.CharField(max_length=100, default='',verbose_name="Nombre Comun")
-    imageFile = models.ImageField(upload_to='images', null=True,verbose_name="Imagen")
-    short_desc = models.CharField(max_length=200, default='',verbose_name="Descripcion Corta")
-    large_desc = models.TextField(max_length=2000, default='',verbose_name="Descripcion Larga")
     kingdom=models.CharField(max_length=100, default='',verbose_name="Reino")
     phylum=models.CharField(max_length=100, default='',verbose_name="Filo")
     classEspecie = models.CharField(max_length=100, default='',verbose_name="Clase")
     order = models.CharField(max_length=100, default='',verbose_name="Orden")
     family = models.CharField(max_length=100, default='',verbose_name="Familia")
     genus = models.CharField(max_length=100, default='',verbose_name="Genero")
-    species=models.CharField(max_length=100, default='',verbose_name="Especie")
-
+    species=models.CharField(max_length=100, default='',verbose_name="Nombre Cientifico")
+    imageFile = models.ImageField(upload_to='images', null=True,verbose_name="Imagen")
+    short_desc = models.CharField(max_length=200, default='',verbose_name="Descripcion Corta")
+    large_desc = models.TextField(max_length=2000, default='',verbose_name="Descripcion Larga")
     def __unicode__(self):
-       return 'Especimen: ' + self.name
+       return 'Nombre: ' + self.name
 
 class Comment(models.Model):
     class Meta:
