@@ -1,5 +1,6 @@
 import json
 
+import logging
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -9,6 +10,8 @@ from django.core import serializers
 from django.http import JsonResponse
 
 # Create your views here.
+
+
 from .models import UserProfile, Country, City, Specie
 
 
@@ -44,6 +47,40 @@ def adicionar_usuario(request):
 
             user_model.save()
             mensaje = 'ok'
+
+    return JsonResponse({"mensaje": mensaje})
+
+@csrf_exempt
+def editar_usuario(request):
+    mensaje = ''
+
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        description = request.POST['description']
+        user_model= request.user
+        user_model.first_name = first_name
+        user_model.last_name = last_name
+        user_model.profile.description = description
+        if request.FILES.get('imageFile', False) :
+            user_model.profile.imageFile = request.FILES['imageFile']
+        id_city = request.POST['id_city']
+        user_model.profile.city_id = id_city
+        city_name = City.objects.values_list('name', flat=True).get(pk=id_city)
+        country_id = City.objects.values_list('country_id', flat=True).get(pk=id_city)
+        user_model.profile.city_name = city_name
+        country_name = Country.objects.values_list('name', flat=True).get(pk=country_id)
+        user_model.profile.country_name = country_name
+
+        user_model.save()
+        mensaje = 'ok'
+    else:
+
+        lista_paises = Country.objects.all()
+        context = {'lista_paises': lista_paises,
+                   'user_model': request.user,
+                   'user_profile':request.user.profile}
+        return render(request, 'especies/modificacion.html', context)
 
     return JsonResponse({"mensaje": mensaje})
 
