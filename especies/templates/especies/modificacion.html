@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar registro</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+          crossorigin="anonymous"/>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+</head>
+<body>
+{% comment %}
+{% block content %}
+{% endcomment %}
+<div class="row">
+    <div class="col-md-6 col-sm-offset-3">
+        <div class="page-header">
+            <h2>Modificacion Registro visitante</h2>
+        </div>
+
+        <div id="mensaje_danger" class="alert alert-danger">
+            <label id="mensaje"></label>
+        </div>
+
+        <form id="formImagen" action="../editUser/" enctype="multipart/form-data" method="post">
+            <input id="first_name" name="first_name" type="text" placeholder="Nombres" class="form-control input-md"
+                   value="{{user_model.first_name}}" required><br>
+            <input id="last_name" name="last_name" type="text" placeholder="Apellidos" class="form-control input-md"
+                   value="{{user_model.last_name}}" required><br>
+            <input id="imageFile" name="imageFile" type="file" ><br>
+            <span id="country" name="{{user_profile.city.country.id}}"></span>
+            <span id="city" name="{{user_profile.city.id}}"></span>
+            <select id="id_country" name="id_country" class="form-control"  required>
+                <option value="">--Seleccione Pais--</option>
+                {% for pais in lista_paises %}
+                    <option value="{{ pais.id }}">{{ pais.name }}</option>
+                {% endfor %}
+            </select><br>
+            <select id="id_city" name="id_city" class="form-control"  required>
+                <option value="">--Seleccione Ciudad--</option>
+            </select><br>
+            <textarea placeholder="Díganos su interes en la reserva" name="description" class="form-control span6"
+                      rows="3" id="description" required>{{user_profile.description}}</textarea><br>
+
+            <input type="submit" value="Modificar" class="btn btn-primary">
+            <a href="../" class="btn btn-primary">Cancelar</a>
+
+        </form>
+    </div>
+</div>
+<script>
+    $('#mensaje_danger').hide();
+
+    $('form').submit(function (e) {
+
+
+        var formData = new FormData($('#formImagen')[0]);
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.mensaje == 'ok') {
+                    window.location = "../";
+                }
+                else {
+                    $('#mensaje').text(data.mensaje);
+                    $('#mensaje_danger').show();
+                }
+            },
+            failure: function (errMsg) {
+                alert('Hubo un error');
+            }
+        });
+        e.preventDefault();
+    });
+    $('#id_country').on('change', function () {
+        $('#id_city')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">--Seleccione--</option>')
+            .val('-1');
+
+        if (this.value == -1) {
+            return false;
+        }
+       $.ajax({
+            type: "POST",
+            url: "../fillCities/",
+            data: JSON.stringify({
+                id_country: this.value
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    $.each(data, function (key, value) {
+                        $('#id_city').append($("<option/>").val(key).text(value));
+                    });
+                } else {
+                    console.log('error')
+                }
+
+            },
+            failure: function (errMsg) {
+                alert('Hubo un error');
+            }
+        });
+    })
+     $('#id_country').val($('#country').attr('name'))
+    $.ajax({
+            type: "POST",
+            url: "../fillCities/",
+            data: JSON.stringify({
+                id_country: $('#id_country').val()
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    $.each(data, function (key, value) {
+                        $('#id_city').append($("<option/>").val(key).text(value));
+                    });
+                    $('#id_city').val($('#city').attr('name'))
+                } else {
+                    console.log('error')
+                }
+
+            },
+            failure: function (errMsg) {
+                alert('Hubo un error');
+            }
+        });
+
+
+</script>
+</body>
+</html>
