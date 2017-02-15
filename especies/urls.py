@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     # Peticiones Ajax o  JavaScript
     url(r'^addUser/$', views.adicionar_usuario, name='addUser'),
+    url(r'^editUser/$', views.editar_usuario, name='editUser'),
     url(r'^logout/$', views.logout_request, name='logout'),
     url(r'^isLogged/$', views.islogged, name='isLogged'),
     url(r'^login/$', views.login_request, name='login'),
