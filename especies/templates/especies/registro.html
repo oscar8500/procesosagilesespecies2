@@ -60,7 +60,7 @@
     $('form').submit(function (e) {
 
         if ($('#password').val() != $('#password2').val()) {
-            alert('Las contraseñas no coinciden')
+            alert('Las contraseñas no coinciden');
             return false;
         }
 
@@ -88,11 +88,11 @@
     });
     $('#id_country').on('change', function () {
         $('#id_city')
-            .find('option')
-            .remove()
-            .end()
-            .append('<option value="">--Seleccione--</option>')
-            .val('-1');
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="">--Seleccione--</option>')
+                .val('-1');
 
         if (this.value == -1) {
             return false;
