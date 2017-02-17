@@ -2,3 +2,9 @@ procesosagilesespecies2/wsgi.pyc
 *.pyc
 .idea/workspace.xml
 .idea/
+.idea/workspace.xml
+.idea/workspace.xml
+especies/models.pyc
+especies/urls.pyc
+especies/views.pyc
+*.pyc
