@@ -8,3 +8,4 @@ especies/models.pyc
 especies/urls.pyc
 especies/views.pyc
 *.pyc
+*.pyc
