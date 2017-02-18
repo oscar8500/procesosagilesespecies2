@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Especies</title>
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="/images/css/format.css" property="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-
 
 </head>
 <body>
@@ -22,17 +23,21 @@
 
     <div id="content">
         <h1>Especies</h1>
-        <div id="especie-item">
+        <div id="especie-item" class="row">
             {% for especie in lista_especies %}
-                <div class="especie">
-                    <h3><b>{{ especie.category }}</b></h3>
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <p>{{ especie.category }}</p>
                     <a href="/{{ especie.imageFile }}" target="_blank">
-                        <img src="/{{ especie.imageFile }}">
+                        <img src="/{{ especie.imageFile }}" style="width:100%">
                     </a>
+                        <div class="caption">
                     <a href="detalle/{{ especie.id }}">
-                        <h3><b>Nombre:</b>{{ especie.name }}</h3>
+                        <b>Nombre:</b>{{ especie.name }}
                     </a>
-                    <h4><b>Descripción:</b>{{ especie.short_desc }}</h4>
+                            <p>Descripción:</p>{{ especie.short_desc }}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>

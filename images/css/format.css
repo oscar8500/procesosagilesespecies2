@@ -8,14 +8,9 @@ div.especie  {
     text-align:center;
 
 }
-
 body { padding-top: 70px;
 padding-left: 5px;
 padding-right: 5px; }
-
-img {width: 300px;
-height: 200px;
-}
 
 h1{text-align: center;}
 
@@ -25,3 +20,15 @@ table, th, td {
 
 h4{
    width: 300px;}
+
+.well-xsm {
+    padding: 3px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.my-page-header {
+    padding-bottom: 9px;
+    margin: 0px 0 20px;
+    border-bottom: 1px solid #eee;
+}
