@@ -1,18 +1,16 @@
 import json
 
-import logging
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
-from django.core import serializers
-from django.http import JsonResponse
 
 # Create your views here.
 
 
-from .models import UserProfile, Country, City, Specie
+from .models import Country, City, Specie, Category, Comment
 
 
 @csrf_exempt
@@ -75,7 +73,6 @@ def editar_usuario(request):
         user_model.save()
         mensaje = 'ok'
     else:
-
         lista_paises = Country.objects.all()
         context = {'lista_paises': lista_paises,
                    'user_model': request.user,
@@ -129,10 +126,30 @@ def fillCities(request):
 
 
 def index_especies(request):
-    lista_especies = Specie.objects.all()
-    context = {'lista_especies': lista_especies}
+    if request.method == 'POST':
+        jsonUser = json.loads(request.body)
+        id_categoria = jsonUser['id_categoria']
+        lista_especies = Specie.objects.filter(category_id=id_categoria)
+    else:
+        lista_especies = Specie.objects.all()
+    lista_categorias = Category.objects.all()
+
+    context = {
+        'lista_especies': lista_especies,
+        'lista_categorias': lista_categorias
+    }
     return render(request, 'especies/index.html', context)
 
+
+def index_filter(request):
+    if request.method == 'POST':
+        jsonUser = json.loads(request.body)
+        id_categoria = jsonUser['id_categoria']
+        lista_especies = Specie.objects.filter(category_id=id_categoria)
+    else:
+        lista_especies = Specie.objects.all()
+    especiesDict = dict([(c.id, c.name) for c in lista_especies])
+    return HttpResponse(json.dumps(especiesDict))
 
 def index_usuario(request):
     lista_paises = Country.objects.all()
@@ -150,5 +167,12 @@ def ingresar(request):
 
 def detalleEspecie(request, id):
     especie = Specie.objects.get(id=id)
-    context = {'especie': especie}
+    comments = Comment.objects.filter(specie=especie)
+
+    context = {
+        'especie': especie,
+        'comments': comments
+    }
+
+
     return render(request, 'especies/detailspecie.html', context)

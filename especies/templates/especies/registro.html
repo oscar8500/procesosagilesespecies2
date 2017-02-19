@@ -6,6 +6,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
           crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/images/css/format.css" property="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
 </head>
@@ -14,8 +15,15 @@
 {% block content %}
 {% endcomment %}
 <div class="row">
+    <div id="nav-placeholder" class="page-header"></div>
+
+    <script>
+        $.get("/images/html/navbar.html", function (data) {
+            $("#nav-placeholder").replaceWith(data);
+        });
+    </script>
     <div class="col-md-6 col-sm-offset-3">
-        <div class="page-header">
+        <div class="my-page-header">
             <h2>Registro visitante</h2>
         </div>
 
