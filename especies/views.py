@@ -1,18 +1,16 @@
 import json
 
-import logging
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
-from django.core import serializers
-from django.http import JsonResponse
 
 # Create your views here.
 
 
-from .models import UserProfile, Country, City, Specie
+from .models import Country, City, Specie, Category, Comment
 
 
 @csrf_exempt
@@ -50,6 +48,7 @@ def adicionar_usuario(request):
 
     return JsonResponse({"mensaje": mensaje})
 
+
 @csrf_exempt
 def editar_usuario(request):
     mensaje = ''
@@ -58,11 +57,11 @@ def editar_usuario(request):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        user_model= request.user
+        user_model = request.user
         user_model.first_name = first_name
         user_model.last_name = last_name
         user_model.profile.description = description
-        if request.FILES.get('imageFile', False) :
+        if request.FILES.get('imageFile', False):
             user_model.profile.imageFile = request.FILES['imageFile']
         id_city = request.POST['id_city']
         user_model.profile.city_id = id_city
@@ -75,11 +74,10 @@ def editar_usuario(request):
         user_model.save()
         mensaje = 'ok'
     else:
-
         lista_paises = Country.objects.all()
         context = {'lista_paises': lista_paises,
                    'user_model': request.user,
-                   'user_profile':request.user.profile}
+                   'user_profile': request.user.profile}
         return render(request, 'especies/modificacion.html', context)
 
     return JsonResponse({"mensaje": mensaje})
@@ -129,9 +127,30 @@ def fillCities(request):
 
 
 def index_especies(request):
-    lista_especies = Specie.objects.all()
-    context = {'lista_especies': lista_especies}
+    if request.method == 'POST':
+        jsonUser = json.loads(request.body)
+        id_categoria = jsonUser['id_categoria']
+        lista_especies = Specie.objects.filter(category_id=id_categoria)
+    else:
+        lista_especies = Specie.objects.all()
+    lista_categorias = Category.objects.all()
+
+    context = {
+        'lista_especies': lista_especies,
+        'lista_categorias': lista_categorias
+    }
     return render(request, 'especies/index.html', context)
+
+
+def index_filter(request):
+    if request.method == 'POST':
+        jsonUser = json.loads(request.body)
+        id_categoria = jsonUser['id_categoria']
+        lista_especies = Specie.objects.filter(category_id=id_categoria)
+    else:
+        lista_especies = Specie.objects.all()
+    especiesDict = dict([(c.id, c.name) for c in lista_especies])
+    return HttpResponse(json.dumps(especiesDict))
 
 
 def index_usuario(request):
@@ -150,5 +169,11 @@ def ingresar(request):
 
 def detalleEspecie(request, id):
     especie = Specie.objects.get(id=id)
-    context = {'especie': especie}
+    lista_comments = Comment.objects.filter(specie=especie)
+
+    context = {
+        'especie': especie,
+        'lista_comments': lista_comments
+    }
+
     return render(request, 'especies/detailspecie.html', context)
