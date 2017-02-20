@@ -38,20 +38,20 @@
                 <div class="col-md-4" id="{{ especie.category.nomCorto }}">
                     <div class="thumbnail">
                         <p class="list-category">{{ especie.category }}</p>
-                    <a href="/{{ especie.imageFile }}" target="_blank">
-                        <img src="/{{ especie.imageFile }}" style="width:100%">
-                    </a>
+                        <a href="/{{ especie.imageFile }}" target="_blank">
+                            <img src="/{{ especie.imageFile }}" style="width:100%">
+                        </a>
                         <div class="caption">
-                    <a href="detalle/{{ especie.id }}">
-                        <b>Nombre:</b>{{ especie.name }}
-                    </a>
+                            <a href="detalle/{{ especie.id }}">
+                                <b>Nombre:</b>{{ especie.name }}
+                            </a>
                             <p>Descripción:</p>{{ especie.short_desc }}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-        </div>
+    </div>
 </div>
 <script>
     $('#id_categoria').on('change', function () {

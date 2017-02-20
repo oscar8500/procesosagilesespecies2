@@ -85,7 +85,30 @@
             <div class="col-sm-0 col-md-0 col-lg-2">
             </div>
             <div id="comment-container" class="col-sm-12 col-md-12 col-lg-8 container">
-                <span class="cualquier-cosa">Aqui sus comentarios</span>
+                <div class="well well-xsm">
+                    <span class="cualquier-cosa">Ingrese aquí sus comentarios</span>
+
+                    <div id="new-comment">
+                        <form id="formComment" action="../addComment" enctype="multipart/form-data" method="post">
+                            <input id="email" name="email" type="email"
+                                   placeholder="Correo electrónico(nombre de usuario)" class="form-control input-md"
+                                   required><br>
+                            <textarea placeholder="¿Qué piensa de esta especie?" name="comment"
+                                      class="form-control span6" rows="3" id="description" required></textarea><br>
+                            <input type="submit" value="Registrar" class="btn btn-primary">
+                            <a href="#" class="btn btn-primary">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+                <div id="comment-history">
+                    {% for comment in lista_comments %}
+                        <div class="well well-xsm">
+                            <span class="cualquier-cosa">Autor:{{ comment.email }}</span></br>
+                            <span class="cualquier-cosa">Fecha:{{ comment.addDate }}</span></br>
+                            <span class="cualquier-cosa">Comentario:{{ comment.content }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="col-sm-0 col-md-0 col-lg-2">
             </div>

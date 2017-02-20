@@ -48,6 +48,7 @@ def adicionar_usuario(request):
 
     return JsonResponse({"mensaje": mensaje})
 
+
 @csrf_exempt
 def editar_usuario(request):
     mensaje = ''
@@ -56,11 +57,11 @@ def editar_usuario(request):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        user_model= request.user
+        user_model = request.user
         user_model.first_name = first_name
         user_model.last_name = last_name
         user_model.profile.description = description
-        if request.FILES.get('imageFile', False) :
+        if request.FILES.get('imageFile', False):
             user_model.profile.imageFile = request.FILES['imageFile']
         id_city = request.POST['id_city']
         user_model.profile.city_id = id_city
@@ -76,7 +77,7 @@ def editar_usuario(request):
         lista_paises = Country.objects.all()
         context = {'lista_paises': lista_paises,
                    'user_model': request.user,
-                   'user_profile':request.user.profile}
+                   'user_profile': request.user.profile}
         return render(request, 'especies/modificacion.html', context)
 
     return JsonResponse({"mensaje": mensaje})
@@ -151,6 +152,7 @@ def index_filter(request):
     especiesDict = dict([(c.id, c.name) for c in lista_especies])
     return HttpResponse(json.dumps(especiesDict))
 
+
 def index_usuario(request):
     lista_paises = Country.objects.all()
     context = {'lista_paises': lista_paises}
@@ -167,12 +169,11 @@ def ingresar(request):
 
 def detalleEspecie(request, id):
     especie = Specie.objects.get(id=id)
-    comments = Comment.objects.filter(specie=especie)
+    lista_comments = Comment.objects.filter(specie=especie)
 
     context = {
         'especie': especie,
-        'comments': comments
+        'lista_comments': lista_comments
     }
-
 
     return render(request, 'especies/detailspecie.html', context)
