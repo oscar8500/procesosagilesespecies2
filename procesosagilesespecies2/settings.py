@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'procesosagilesespecies2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'especies',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'NAME': 'dc7man9v40v71m',
+        'USER': 'sxksjpxyyakdtw',
+        'PASSWORD': '1c428c5ebda817731798c31e27ebb954c0a0e8426e5ca09f719494b6caca231d',
+        'HOST': 'ec2-54-235-153-124.compute-1.amazonaws.com',
         'PORT': '5432'
     }
 }
